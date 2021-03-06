@@ -71,4 +71,7 @@ if __name__ == '__main__':
         sleep(0.1)        
 
     print("Execution time:", time() - start_time)
-    print(dictionary)
+    if len(dictionary) == 0:
+        print ("No se encontró ninguna solución :(")
+    else:
+        print(dictionary)

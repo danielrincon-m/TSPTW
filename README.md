@@ -28,6 +28,10 @@ Clone el proyecto utilizando el siguiente comando:
 git clone https://github.com/danielrincon-m/TSPTW.git
 ```
 
+## Documento de diseño
+
+El documento de diseño se puede encontrar [aquí](Proyecto_ALDA_TSPTW.pdf).
+
 ## Herramientas utilizadas 🛠️
 
 * [Visual Studio Code](https://www.jetbrains.com/es-es/idea/download/) - IDE de desarrollo

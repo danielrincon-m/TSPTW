@@ -8,8 +8,7 @@ from tsp.random.tsp import TSPRandom
 
 
 def read_file(filename: str):
-    f = open("tsp/resources/" + filename, "r") if filename.endswith(".txt") \
-        else open("tsp/resources/" + filename + ".txt", "r")
+    f = open("tsp/resources/" + filename, "r")
     n_cities = int(f.readline())
     cities = [{} for _ in range(n_cities)]
     for i in range(n_cities):
@@ -20,9 +19,7 @@ def read_file(filename: str):
     return cities
 
 
-def run(tsp, cities, dictionary):
-    global process_number
-
+def run(tsp, cities, dictionary, process_number):
     with process_number.get_lock():
         process_number.value += 1
 
@@ -62,14 +59,15 @@ if __name__ == '__main__':
 
     while time() - start_time < MAX_TIME:
         with process_number.get_lock():
-            if process_number.value < max_process_number:
-                tsp = TSPRandom(
-                    max_errors = randrange(50, 500),
-                    max_time = min(MAX_TIME, MAX_TIME - (time() - start_time)),
-                    early_arrive = randrange(2)
-                )
-                process = Process(target=run, args=(tsp, cities, dictionary))
-                process.start()
+            pn = process_number.value
+        for i in range (max_process_number - pn):
+            tsp = TSPRandom(
+                max_errors = randrange(50, 500),
+                max_time = min(MAX_TIME, MAX_TIME - (time() - start_time)),
+                early_arrive = randrange(2)
+            )
+            process = Process(target=run, args=(tsp, cities, dictionary, process_number))
+            process.start()
         sleep(0.1)        
 
     print("Execution time:", time() - start_time)
